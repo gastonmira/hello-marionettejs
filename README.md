@@ -3,6 +3,6 @@ hello-marionettejs
 
 App using MarionetteJS
 
-Coders:
-Nicolas Martello and 
+Coder:
+ 
 Gaston Mira
