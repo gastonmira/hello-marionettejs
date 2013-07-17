@@ -14,7 +14,7 @@
         	</div>
       	</div>
 	</div>
-	<div class="container">
+	<div id="main-region" class="container">
 	<p>Here is static content in the web page. You'll notice that it gets
 	replaced by our app as soon as we start it.</p> 
 	</div>
@@ -24,5 +24,51 @@
 	<script src="./assets/js/vendor/underscore.js"></script>
 	<script src="./assets/js/vendor/backbone.js"></script>
 	<script src="./assets/js/vendor/backbone.marionette.js"></script>
+
+	<script type="text/template" id="contact-template">
+		<p><%= firstName%> <%= lastName%></p>
+	</script>
+
+	<script type="text/template" id="list-item-template">
+		<li>One item</li>
+	</script>
+	
+	<script type="text/javascript">
+		var ContactManager = new Marionette.Application();
+
+		ContactManager.Contact = Backbone.Model.extend({});
+
+		ContactManager.addRegions({
+			mainRegion: "#main-region"
+		});
+		
+		ContactManager.StaticView2 = Backbone.Marionette.ItemView.extend({
+			id: "listView",
+			tagName: "ul",
+			className: "list",
+			template: "#list-item-template"
+		});
+		
+		ContactManager.ContactView = Backbone.Marionette.ItemView.extend({
+  			template: "#contact-template"
+		});
+
+		ContactManager.on("initialize:after", function(){
+			var alice = new ContactManager.Contact({
+				firstName: "Alice",
+				lastName: "Arten",
+				phoneNumber: "555-0184"
+			});
+
+			var aliceView = new ContactManager.ContactView({
+				model: alice
+			});
+
+			ContactManager.mainRegion.show(aliceView);
+		});
+
+		ContactManager.start();
+	</script>
+
 </body>
 </html>
